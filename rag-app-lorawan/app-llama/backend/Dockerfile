@@ -1,34 +1,26 @@
-FROM python:3.11-slim as build
+FROM python:3.11 as build
 
-WORKDIR /backend
+WORKDIR /app
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    chromium \
-    chromium-driver \
-    && rm -rf /var/lib/apt/lists/*
+ENV PYTHONPATH=/app
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python3 && \
+RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
     ln -s /opt/poetry/bin/poetry && \
     poetry config virtualenvs.create false
 
-# Copy dependencies configuration files first to leverage Docker cache
-COPY pyproject.toml poetry.lock* /backend/
-
-# Copy .env file
-COPY /backend/.env
+# Install Chromium for web loader
+# Can disable this if you don't use the web loader to reduce the image size
+RUN apt update && apt install -y chromium chromium-driver
 
 # Install dependencies
+COPY ./pyproject.toml ./poetry.lock* /app/
 RUN poetry install --no-root --no-cache --only main
 
-# Copy all other project files
+# ====================================
+FROM build as release
+
 COPY . .
 
-# Expose port and define default command
-EXPOSE 8000
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "main.py"]
