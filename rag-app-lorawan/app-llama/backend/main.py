@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
 import asyncio
+import uvicorn
 
 # Load environment variables
 load_dotenv()
@@ -135,3 +136,11 @@ async def chat(query_request: QueryRequest):
         return {"response": str(response)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+if __name__ == "__main__":
+    app_host = os.getenv("APP_HOST", "0.0.0.0")
+    app_port = int(os.getenv("APP_PORT", "8000"))
+    reload = True
+    
+    uvicorn.run(app="main:app", host=app_host, port=app_port, reload=reload)
