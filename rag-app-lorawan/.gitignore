@@ -1,0 +1,48 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.env
+venv/
+ENV/
+
+# Poetry artifacts
+/poetry.lock
+/pyproject.toml
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyCharm artifacts
+.idea/
+
+# Jupyter Notebook artifacts
+.ipynb_checkpoints
+
+# macOS artifacts
+.DS_Store
+
+# Tests
+/.pytest_cache/
+.deepeval
+.deepeval-cache.json
+
+__pycache__
+storage
+output

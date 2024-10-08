@@ -1,0 +1,667 @@
+[
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "What is the best compromise between spreading factor and coding rate?",
+        "answer": "Consider the following scenario: the payload data packets are running at 9600 bit/s, with a 250 kHz bandwidth. In these conditions the LoRa Calculator Tool offers two possibilities that are compatible with the 9600 kbit/s speed: a) SF7 and coding rate 4/5, giving a maximum payload rate of 10937 bit/s. b) SF6 and coding rate 4/8 (a much better FEC), giving a maximum payload rate of 11718 bit/s. The second option is certainly better, if the link margin is sufficient. For the same time-on-air, you have more redundancy, which will give you a better chance to recover the packet in case of a nasty, high-power, in-band interference. At the cost of a small sensitivity hit, of about 2.5dB."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Is there a LoRa IQ Waveform library narrower than 62.5 kHz?",
+        "answer": "Lower BW are made by simply playing the waveform files at a lower sampling rate. The OSR is set to 4, so play them at 500 kHz for LoRaBW = 125 kHz, 250 kHz for LoRaBW = 61.25 kHz, 125 kHz for LoRaBW = 30.6 kHz, and so on."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Can I used a long preamble to wake-up devices and ask them to transmit their data?",
+        "answer": "This method is extremely widespread in the industry, for instance in drive-by smart-metering scenario where an interrogator is present and sends a long preamble to wake-up a device for seldom interrogation. It is all a trade-off between Rx duty-cycle (energy efficiency on the Rx), length of the interrogating preamble, and over-hearing. The source has to be clever enough to detect false interrogations and adapt itself to fake interrogations, for example due to a raise in the noise floor in the channel. Typically, wake-up on RSSI is used and self-adapting RSSI threshold helps mitigate over-hearing, which is harmful for the battery lifetime."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Does a LoRaWAN concentrator have built-in GPS support?",
+        "answer": "Most commercial gateways have either a built-in GPS or have an input to use an external one. The GPS is mandatory for Class B so that the beacons are all synchronized."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "What are the typical ranges of good and poor values for the RSSI and SNR one should expect for an uplink?",
+        "answer": "Typical Noise Floor is usually close to -120 dBm, this will be your average lower bound for RSSI. When the signal is saturated, -40 to -30 dBm sounds about right. The LoRa receiver is able to demodulate RF packets with a SNR as low as -20 dB in SF12. Anything higher than +5 dB is meaningless, and should be considered as there being \"plenty of signal\"."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "What would be the minimal channel spacing for 125 kHz at 100 mW channels ?",
+        "answer": "The typical channel spacing for LoRa and LoRaWAN is 200 kHz, which is the separation between two channels (if you have one device running at 912.2 MHz, the next one would be at 912 or 912.4 MHz). In principle, LoRa gives proper separation (selectivity) with more than 1.5*LoRaBW as far as channel separation goes. This would be at the minimum 178.5 kHz. Any lower separation would yield lower isolation and therefore more collision chances, the larger the better."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Where does the CAD Detected interrupt occur in the preamble?",
+        "answer": "The CAD interrupt happens at a determined time after the CAD has been requested by the host. It can be on preamble (best performance), but could also fire up on payload if it is launched then, although with potentially degraded performance."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "It is possible to initialize a packet transmission via an SX1280 DIO?",
+        "answer": "It is not possible to use one of the DIOs of SX1280 to start a transmission sequence.To fine control the instant of a Tx start after a Rx event, it is recommended to use the command \"SetAutoTx\""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "What is the maximum size of an application payload downlink message?",
+        "answer": "The payload size limitations are identical in uplink and downlink. The limitation itself depends on the data rate and the local regulations. Depending on the regulation, the time-on-air may have some limitations which are then enforced in the LoRaWAN Specifications. For more information, check the LoRaWAN Specifications and the LoRaWAN Regional Parameters."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Why is there a latency when a SX1272 is processing a packet?",
+        "answer": "Between the moment a packet is sent by a sensor, and the moment a DIO interrupt is started by a SX1272, there is a certain latency time.The value of this latency is roughly 3/4 of a symbol and only depends on the chosen Spreading Factor.This latency is actually the time needed by the SX1272 to process demodulation."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "If I create a base station with an SX127x chip, how many end-devices can communicate with the base station?",
+        "answer": "Two devices containing an SX127x chip can communicate in a point-to-point mode. Alternatively, you can create a small gateway with one SX127x. However, you will not be able to create a LoRaWAN base station with just one SX127x. The SX127x is a one frequency, one data rate chip while a gateway is able to cope with several channels and several data rates at the same time."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "The 915 MHz ISM band is divided in 64 channels for upstream (902.3 to 914.9 MHz) and 8 channels for downstream (923.3 to 927.5 MHz). If both uplink and downlink channels are in different bands, how can LoRa® nodes communicate with their base station?",
+        "answer": "Transceivers used in LoRa®-connected end-devices are frequency-agile, i.e. they have a fast switching PLL onboard. During the uplink, they use a first channel (say 902 MHz), and it is very easy and fast to change the frequency to, for instance, 920 MHz, before the transceiver is turned to reception mode. This takes typically 100 microseconds to do. Both the uplink and downlink messages are transmitted on determined channels. For example, on class A devices the uplink channels are controlled by the channel mask (ChMask) , whereas the downlink channels are either a function of the uplink channel or configurable through MAC commands."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "How come LoRaWAN devices have the possibility to switch from LoRa to FSK modulation for high received levels?",
+        "answer": "LoRa is a spread-spectrum modulation and offers throughputs from 300 bit/s to 11 kbit/s in the EU LoRaWAN implementation. The next proposed setting is FSK 50 kbit/s, which LoRa doesn't currently achieve. The intent in this definition is to offer a way to \"throttle\", that means to increase the bit rate when the device is close to the gateway. This has multiple benefits, such as reducing the transmission time and saving the battery, reducing the chances of collision and therefore packet loss, and increasing the capacity of the networks."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "How can I setup pre-certification tests for my end-devices?",
+        "answer": "The LoRa Alliance has developed a comprehensive certification program. It offers the possibility for the Members to receive one LoRaWAN Certification Test Tool (LCTT) license annually. The LCTT lets you troubleshoot and solve development issues before sending it off for certification testing at an Authorized Test House. More information on the LoRa Alliance website:https://lora-alliance.org/lorawan-certification/"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Is there a special NetID allocated for a private LoRaWAN network?",
+        "answer": "Only public LoRa network operators or private network operators who use roaming need to get a NetID from the LoRa Alliance™. Private network operators that don't use roaming don't need a NetID. NetID 0 or 1 can be used freely in any network. It is not LoRaWAN compliant to use a NetID which is not allocated."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "How can I upgrade firmware of end-devices?",
+        "answer": "You can perform firmware upgrade from the server, the time needed for the upgrade depends on the size of the firmware to be updated. The LoRa Alliance has standardized a way to group devices together in a Multicast group for concurrent update, and an efficient Transport layer with built-in redundancy for optimized file delivery. The idea is to switch the node in class B or in class C and to send data from the server. There are examples of FUOTA (firmware upgrade over the air) available from several partners of the LoRa Alliance."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "How do I choose the best LoRa modulation parameters and what is the trade-off?",
+        "answer": "Let's take an example to best illustrate a choice between equivalent modulation parameters. In the first case we have Bandwidth (BW) 125 kHz and Spreading Factor at SF12. This results in a data rate at 30 symbols/sec and Rx sensitivity at -137 dBm. Let's compare this with BW 10.4 kHz and SF8, which results in very similar result: data rate at 40 symbols/sec and Rx sensitivity of -138 dBm. The trade-off here is that with BW 10.4 kHz, you will have to use a TCXO which adds cost to your system. Contrarily, at BW 125 kHz, you do not need a TCXO anymore. At the end of the day, it is simply a matter of cost versus performance."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "How does LoRa behave when there is coexistence of private and public networks at given location?",
+        "answer": "Whether private or public, overlapping networks in a specific geographical area will share the medium, and therefore the collision rate will increase. The common techniques which can be used to alleviate this situation is the use of Clear Channel Assessment, which evaluates the \"cleanness\" of a channel by using spectral scanning techniques (and therefore adapt the channel plan), and implements retries in packet transmission to maximize success rate. When it comes to the access point side (gateways), the use of the\"private\" sync word versus \"public\" sync word is useful to ensure that the gateways don't report a vast majority of the incoming traffic using a different setting."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Does the LoRaMac-node library support adaptive data rate in both directions?",
+        "answer": "The LoRaWAN stack available on Github supports Adaptive Data Rate. The algorithm is actually controlled by the network server and the network server will send a MAC command to increase or decrease the data rate depending on the received signal level. When using confirmed messages on the node side, if the node does not receive the acknowledge, it will automatically decrease the packet data rate."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq",
+        "question": "Why are two SX1257 chips and one SX1301 chip used in the PicoCell Gateway?",
+        "answer": "Each SX1257/50/55 chip can digitize almost 1 MHz of spectrum, therefore two are required typically to achieve 8 channels with a channel separation of 200 kHz or so. The limitation of using a single SX1257/50/55 chip and one SX1301/08/02 chip is that you can only digitize 1 MHz of spectrum (and not 2 MHz) and can only build a 4 channel modem since the channels are spaced 200 kHz apart."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is Adaptive Data Rate (ADR) supported by all LoRaWAN sensors?",
+        "answer": "Yes, ADR support is mandatory and enforced in the LoRa Alliance certification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is it useful to have some spreading factor diversity or is it better to always use SF12, as it shows better performance for timestamping accuracy?",
+        "answer": "Per the test results that we have gathered and shared, there is no benefit in using spreading factor diversity. Diversity should however be part of the ADR strategy: frequency and time diversity are highly beneficial. SF12 makes sense for static end-devices which are at the limit of coverage, typically with a repetition order of 4 (NbTrans=4). In many situations of mobile devices it is certainly better to use a low spreading factor (e.g., SF7) and a high repetition rate, up to 15 times, which maximizes time and frequency diversity."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is it possible to configure the network server for downlinks strictly in the second receive windows?",
+        "answer": "Yes, in principle it is possible to adopt this kind of policy in the network controller. It can even be a policy which is applied specifically by end-device, meaning that a pool of end-devices could be acknowledged on Rx1, and others on Rx2."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is there a maximum device speed at which LoRa can be used for communication purposes?",
+        "answer": "The doppler effect at high speeds (from 100 to 300 km/h) can be handled by the technology. However, at these speeds other effects come into play, such as the change of doppler shift with time and important variations in the channel characteristics during packet reception. This being said, we have feedback from users being able to receive at more than 200 km/h."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Can a LoraWAN® end-device get a receive acknowledgement for every transmission?",
+        "answer": "The LoRaWAN standard supports acknowledgment, either at the MAC (concept of Confirmed Frames) or the Application level. Although this functionality is offered, it is only recommended to used acknowledgement for mission critical packets, such as alarm conditions. Uplink capacity being much higher than downlink capacity, to maximimze uplink packet success rate it is generally speaking better to use packet repetition techniques, rather than ACK, to maximize success"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is it required to have separate power rails for each IC in a LoRa Picocell Gateway? Can I connect all the power rails with same net?",
+        "answer": "For noise immunity (digital to RF), it is safer to use a separate 3.3 V power rail between SX1308 baseband chip and SX1257 RF transceivers. SE2435L RF front-end uses two power rails: 3.3 V (VCC0) and 2.0 V (VCC1 and VCC2). Concerning the 3.3 V (VCC0), it is already shared with the 3.3 V LDO SX1257 radio_A on the reference block diagram and schematic of Picocell Gateway. You can keep it this way. You can share the same 3.3 V power rail between the two SX1257 radio_A and radio_B RF transceivers. This 3.3 V power rail can also be used to supply the 32MHz TCXO. In summary, two separate 3.3V power rails are recommended: For more details, see the Picocell Gateway reference design."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "The libloragw HAL related to SX1257 mentions that the useful bandwidth of SX125x radios depends on channel bandwidth. What is the actual usable bandwidth of the SX1257?",
+        "answer": "The 500 kHz maximum signal bandwidth mentioned in the SX1257/SX1255 datasheet corresponds to a maximum RF double sideband bandwidth of 1 MHz i.e. 500 kHz up and down from its center frequency. To avoid any loss of useful signal and due to the specific LoRa® spectral shaping, the maximum RF double side band bandwidth for SX1257/SX1255 is defined in the libloragw HAL as follows:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is there a minimum payload length for SX1272?",
+        "answer": "The LoRa packets always use a forward error correction code defined by the coding rate. Therefore, even to transmit a 0-byte payload, LoRa modems will always use some error correction and thus the minimum payload size is 0 and the maximum payload size is 255 bytes"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Will LoRa work under water?",
+        "answer": "RF wave propagation doesn't really work through water as the attenuation at high frequencies is far too high. In theory if the frequency was low enough (down in the Hz and not MHz ) it could work but this is not within the scope of the system specification and so the simple answer is no."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is it possible for an SX1257 to demodulate SF6, SF7, SF10, SF12 simultaneously on the same frequency?",
+        "answer": "The SX1257 can not demodulate LoRa or FSK modulations. It just downconverts a 1 MHz chunk spectrum in the 800/900 MHz frequency band in raw I and Q signals at baseband. The 4 channels of a SX1257 can be freely configured to the same, overlapping or adjacent frequencies. Using two SX1257 at the same frequency will not improve the reception sensitivity or capacity if both SX1257 share the same antenna. You can use two 180-degree directional antennas oriented one to the north and the other to the south improving sensitivity, or better two omnidirectional antennas separated 1 meter with each other for diversity, mitigating the multipath. Two signals on the same frequency and the same SF will interfere with each other. If one signal is, for example, 30 dB higher than the other, you will receive only the strongest one. Two signals on the same frequency and different SF will interfere with each other, but as SF are orthogonal to each other. If one signal is, for example, 12 dB higher than the other, you will receive both signals. If not, you will receive only the strongest one."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Can a sensor transmit systematically for example three times for each uplink without asking for acknowledgement?",
+        "answer": "The LoRaWAN  protocol supports packet repetition to maximize packet success rate in an asynchronous system. The right pointer is the NbTrans parameter in the LoRaWAN specification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is there a way to estimate the power consumption of a gateway that will serve 50 sensors on a 15-minute window?",
+        "answer": "The gateway power consumption is mostly independent of incoming traffic. We're speaking about a couple of watts (below 10 watts), but for a precise answer please get in touch with your gateway maker. The overall consumption depends on the supply strategy, peripherals, CPU used, and backhaul among others."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "What types of LoRa modules are on the market ?",
+        "answer": "The LoRa Alliance website references a number a modules and modems available from the LoRaWAN eco-system, with different characteristics. Modules have open MCUs where you can implement LoRaWAN and application. Modems on the other side, are typically closed-source module with the stack built-in, and must be driven by an external App MCU, usually over a serial interface. More recently, RF-only modules have also appeared. They contain no MCU, but they simplify the RF design and qualification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Where can the description of the LoRaWAN v1.0.2  PHDR (physical header) be found?",
+        "answer": "The description of the PHY header is best found in the datasheets of the PHY devices, namely SX1276 and SX1272 RFICs from Semtech. In explicit header mode, the header carries three values: You can find more detailed information on the LoRa header in sections 4.1.1.6 \"LoRa Packet Structure\" of theSX1272 and SX1276 datasheets. The datasheet and User Manual of SX1261/61 and LR11xx devices contains similar information\""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "What is the performance of LoRa in rain?",
+        "answer": "No specific study has been run by Semtech on the performance of LoRa in rain. However, there is literature documenting the impact of rain on 1G and 2G cellular systems, which essentially use the same UHF frequencies. Therefore, the impact of rain on the performance of LoRa can be considered low."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is there a correlation between the output impedance of the transceiver SX1272 and its consumption? How can I optimize the impedance output to obtain the power requirement and stable power consumption?",
+        "answer": "The tradeoff is quite complex, but in principle the sensitivity of the PA output is inversely proportional to the load-impedance required to obtain the output power. You can grasp that a mismatch at the antenna will have less impact on RFO than it does on PA_BOOST (less impedance transformation). The OCP block is here to limit the current drain, protecting your power supply or battery in case of severe mismatch conditions."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "What is the value of the rssi_offset parameter in the global_conf.json file on a gateway running on SX1301?",
+        "answer": "The RSSI (Receive Signal Strength Indication) value corresponds to the estimation of the received input power signal at the antenna seen by the gateway. There is no block at the antenna to perform this estimation, but a baseband RSSI  \"sx1301_rssi \" is estimated inside the SX1301 chip. Then the RSSI (at the antenna) is calculated by subtracting the gain of the Rx chain  \"Rx_gain\" to the baseband_rssi: sx1301_rssi = Input_level_antenna (=RSSI) + Rx_gain This implies that RSSI =   sx1301_rssi €\" Rx_Gain. The RSSI value is read from the SX1301's packet buffer and is then summed with the rssi_offset:RSSI = sx1301_rssi + rssi_offset => so rssi_offset = -Rx_gain The accuracy of the RSSI value depends of two factors: The Rx gain includes analog gain (from antenna to ADC block) as well as digital gain. The analog gain, by nature, can change from one gateway to another one.  \"rssi_offset\" can then be used to calibrate/compensate any Rx gain variation. The RSSI parameter can be used for following features:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "How can I calculate the path loss of LoRa?",
+        "answer": "Path loss in the sub-GHz spectrum is now well studied and documented, thanks to analysis done by the cellular industry over the last few decades. Both line-of-sight and urban-type models are available, such as the Friis formula for line-of-sight, and COTS-231 for urban environments. Path loss estimations are compared to the link budget of the LoRa technology, which can be estimated by summing the effective radiated power of the transmitted (typically 14 dBm in Europe and Asia), and the sensitivity of the received (down to -137 dBm)."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "What is antenna gain offset?",
+        "answer": "Depending on the network server used, the antenna gain offset calculation is done in the server or in the gateway. In recent versions of the packet forwarder, there is an entry in the\"global_conf.json\" file that looks like this:  \"antenna_gain\": 0, /* antenna gain, in dBi */ This \"antenna_gain\" can be used to compensate the gateway Tx Ouput Power  \"rf_power\" by the gateway itself, not by the network server. Indeed, the  \"rf_power\" field for each entry of the Tx LUT, defined in the  \"global_conf.json\" too, corresponds usually to the conducted Tx Output Power, not the radiated one. For instance, the  \"rf_power\" along with its gain fields (\"pa_gain\",\"mix_gain\" and\"dig_gain\") can come from a generic/conducted (i.e. without any antenna) calibration performed at production time. So, afterwards, you can define the \"antenna_gain\" in the\"global_conf.json\" configuration file to take into account any gain of the antenna mounted on the gateway in the field. In the packet_forwarder program of the gateway, the  \"antenna_gain\" field is subtracted from the  \"rf_power\" field for all Tx LUT entries as follow: final_rf_power = rf_power - antenna_gain. \"antenna_gain\" must be a signed 8-bit integer, from -128 to +127."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P20",
+        "question": "Is the LoRaWAN Frame Counter monotonously increasing?",
+        "answer": "The Frame counter shall never reset, as it would indicate a potential security issue to the network server. The Security White Papers published by the LoRa Alliance address this point."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What is the sensitivity of LoRa in a deep underground configuration?",
+        "answer": "The sensitivity of the LoRa Technology does not depend on the environment in which it is installed. However the propagation will be much worse underground, due to penetration loss. As a first guess, you could estimate 20 to 30 dB of penetration loss for underground systems."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What is the maximum number of LoRa end-devices a LoRaWAN gateway can communicate with?",
+        "answer": "There is no definite answer to this question as it depends on four dimensions:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "Can ADR be used for any use case?",
+        "answer": "ADR is well suited for static end-devices. ADR is not recommended for mobile end-devices in situations where connectivity is intermittent. In these situations it is recommended to use a low spreading factor (e.g., SF7) and high repetition (e.g., NbTrans=8), and to switch quickly to high spreading factor (e.g., SF10)."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What are network server and application server?",
+        "answer": "The network server and application server are software entities that control higher level aspects of a LoRaWAN application. The gateway and end device look after the physical layer connection, the network server looks after the protocol and the application server looks after the application level control and data. All are required."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "If I want to send HD1080p video data between end-devices, can I use LoRa?",
+        "answer": "The maximum bitrate in LoRa is with SF7/bandwdith 500 kHZ and we will be at around 21 kbit/s while HD1080p video bitrate is around 5 Mbit/s in a wire without any handling of packet loss. The LoRaWAN  protocol is unfortunately not made for this kind of application."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What is the maximum Tx power of the SX1272?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "Is it possible  to transfer a VGA (640x480) image over LoRa in a compressed format?",
+        "answer": "Let's get the maths going: One picture with 640 x 480 pixels and 8 bit color code (which is not great) would give you three bytes per pixel (R,G,B color code). This would lead to 921.6 kB of raw data to transmit without any overhead (preamble, header, frame counter,etc). This is a huge amount of data, even at 50 kbit/s, and would take several minutes to send between two devices."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What coding rate should I use for my LoRaWAN application?",
+        "answer": "Typically all LoRaWAN makers use 4/5, but strictly speaking the coding rate is not enforced in the LoRaWAN specification. The choice is up to you."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "How can I improve my packet success rate with LoRaWAN enabled devices?",
+        "answer": "Several recommendation to follow:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "How can I calculate the Received Packet Power?",
+        "answer": "The usually accepted simplification consists of taking into account the Signal to Noise Ratio (SNR) and combining it with RSSI. RSSI and SNR expressed in dBm and dB respectively."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What are DevEUI and JoinEUI and how do you obtain them?",
+        "answer": "DevEUI is a 64-bit number. It is the unique ID of the end-device. JoinEUI is a 64-bit number. It is the unique ID of the join server, which secures network access and exchanges. In LoRaWAN 1.04, JoinEUI replaced AppEUI. How to get them: DevEUI key is linked to the end-device, this means end-device manufacturers should contact the IEEE to get a range of unique identifiers. JoinEUI is provided by the operator of the join server (e.g. network operator, device manufacturer, solution provider). The join server operator should also get it from IEEE."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What is AppKey and how do I obtain it?",
+        "answer": "AppKey, aka NwkKey is a 128-bit key which is used to secure the Join-time communication between the source of the message (the end-device) and the destination of the message (the join server). This key is unique for each device and is a shared secret between Join server and device (symmetric cryptography). It is at the heart of the security and must only be known by the device and the join server. AppKey is never sent over the air and must remain secured over the lifetime of the end-device. How to get it: AppKey is typically a randomly-generated number that is programmed into the end-device and simultaneously communicated to the join server, so that it can authenticate the messages from the end-device."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "Can the new 915.2-920.8 MHz frequency band now be used in Europe for LoRa?",
+        "answer": "The CEPT is still discussion the harmonization of this band in Europe, but this is not yet completed, so for now we are sticking to the 865-870 MHz frequency band."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "Why is LoRaWAN becoming the 'goto' LPWA standard?",
+        "answer": "There are some technical differences between LoRaWAN  and alternative LPWAN technologies which enable a much broader set of applications to be addressed from a bi-directional connectivity, adaptive data rate and end point class perspective, but the key differentiator is the ecosystem, the Certification Program and standardization. If you look at successful technology adoption over the past 10 years all have followed this model. Having different business models, competition, and a diverse ecosystem with industry leaders is the only way to scale volume and deployments. An open standard is also a proven strategy to get acceptance and wide deployment versus proprietary technology, the choice of the various network components; gateways, end-devices, cloud network servers along with chips, development kits and end products from many different suppliers offers a low risk strategy for potential operators or end users. Last but not least LoRaWAN protects data and privacy like no other LPWAN, it is the most secure solution available in the market with AES 128 encryption on multiple levels for all data from sensor to application server and back."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "If I set the LoRa spreading factor to 7 and bandwidth to 500 kHz, could Channel Activity Detection (CAD) detect the preamble of a LoRa signal with spreading factor set to 7 and bandwidth to 125 kHz?",
+        "answer": "No, it may marginally pick up, but in general terms the bandwidth and spreading factor must be be set to the proper value for the Channel Activity Detection (CAD) to work."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "Do you have antenna performance data for the antennas on the SX1280 development kit?",
+        "answer": "The following data shows the impedance of the two antennas on the SX1280 development kit, with the impedance matching. Here we see in excess of 16 dB of return loss which is good for a portable antenna.  The figure below shows a representation of the antenna system diversity performance, based upon the measured antenna S Parameters. (Based upon the method of Blanch et al).  Here the red threshold indicates poor diversity performance, black acceptable diversity performance and green good, i.e. useful, antenna diversity performance.  The final plots show the simulated radiation patterns of the two diversity antennas. The pattern corresponding to the highlighted antenna (with the pattern in the same orientation as the board image). "
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What influence does Tx power have on ranging accuracy?",
+        "answer": "Whilst the ranging performance accuracy is not dependent upon the received signal power (for an example of this and to see how to set up your first ranging measurements, see our application note  for more details). It is important to note that the group delay of the transmitter will change depending upon the programmed transmit power.For this reason it is necessary to include a calibration setting for every programmed output power you intend to use in your final application. Our Introduction to Ranging application note gives more information on how to perform the calibration for your design."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What is the Intermediate Frequency (IF) of SX1280?",
+        "answer": "The intermediate frequency of the SX1280 in receive mode is 1.625 MHz. This means that the image frequency can be found at twice the IF below the programmed RF centre frequency, i.e. FRF - 3.25 MHz."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "I am getting inaccurate ranging results, what should I do?",
+        "answer": "The ranging accuracy can be degraded by one of several phenomenon, but we can eparate these into two broad categories: Design and hardware specific errors"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P40",
+        "question": "What settings give the best ranging accuracy?",
+        "answer": "Recalling that SF11 and SF12 are inaccessible in ranging mode, the highest accuracy ranging setting is to use the highest bandwidth and the highest spreading factor (i.e. 1.6 MHz SF 10). To reduce the time on air of the ranging exchange, one should first decrease the SF then the bandwidth as the latter has the most profound effect on ranging accuracy."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What are the recommended FLRC modem settings for SX1280?",
+        "answer": "There are no recommended settings for the FLRC modem, except that higher data rate (throughput) comes at the expense of reduced sensitivity. This is true of all modulation formats, more information on FLRC can be found in the SX1280 Datasheet."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What are the recommended settings for the LoRa Modem in SX1280?",
+        "answer": "All possible settings described in the SX1280 datasheet are acceptable configurations of the LoRa modem. However, depending upon the requirements of your application, it is certainly possible to configure the modem to one of several setting that will optimize performance.Longest Range Setting:  This configuration is achieved by using the lowest bandwidth and highest spreading factor. Note that the increased sensitivity is achieved at the expense of a lower bitrate, so longer time on air.Highest Accuracy Ranging Setting:  The highest accuracy ranging setting is achieved by setting the highest bandwidth and the highest spreading factor (1.6 MHz SF 10 in the case of ranging which does not operate at Spreading Factors above this).Lowest Energy / Highest Data Rate Setting:  The lowest energy setting of the SX1280 LoRa modem, is to set the SF as low as possible and the bandwidth as high as possible. Note that this increased communication speed, comes at the expense of reduced sensitivity so lower range."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What is the immunity of LoRa to WiFi?",
+        "answer": "The immunity of the SX1280 LoRa modem varies as a function spreading factor, bandwidth, the type of Wi-Fi interference and the frequency offset between the interferer and the wanted LoRa signal.For some OFDM types of Wi-Fi and with low bandwidth, low spreading factor we can get in excess of 60 dB co-channel immunity. The best mechanism to avoid WiFi interference, in general however, will be to avoid the interference by using unoccupied portions of the band. The image below shows our immunity at SF12 200 kHz as a function of frequency, here we see that on the same channel (0 Hz offset) we still have good immunity (45 dB) as we move further away in frequency (the ISM band is 80 MHz wide) we can get in excess of 100 dB of immunity.   There is a little up-tick in the immunity at 0 Hz offset. The reason for this is shown in the second figure. Here the blue trace is the measured WiFi signal spectrum. You can also see here the actual measurement points (red dots). The precise immunity will depend upon the exact power level (here in 200 kHz) of the (blue) WiFi signal. More comprehensive coverage of this topic can be found in our WiFi immunity application note."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What guidance do you have on RF design layout?",
+        "answer": "To avoid re-work and modification of the component values on the RF output of SX1280 it is necessary to follow the reference design as closely as possible. The harmonic filter of SX1280 (magenta) and impedance match (cyan) in particular need to be replicated identically.   Where possible the same family of components as specified in the BOM should also be used. It is possible, in some applications, that VCO leakage in receive mode can be seen. An effective remedy for this is to take the initial precaution of adding series resistances R7 to R10 to the digital lines. Moreover, a 4-layer design allows the DC-DC converter traces to be buried on internal PCB layer 3 (see below) between ground planes on layers 2 and 4."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "How can Ranging Time on Air be calculated?",
+        "answer": "The simplest technique to calculate the time on air for Master and Slave ranging exchanges is to consult the SX1280 calculator tool (available for download from the Tools and SW area). Under the LoRa tab, simply select the modem SF and bandwidth you intend using. The calculator will then show the LoRa symbol time as illustrated below:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What are the two antennas on the board used for?",
+        "answer": "The SX1280 development kit features a pair of antennas. The antennas are used to provide switched diversity to overcome fading, i.e. destructive interference of the wanted RF signal. The triangular patches are used to increase the bandwidth of the antenna and render it more immune to detuning by proximate objects such as a user's hand."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "How are device EUI assigned?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "How is spectral occupation measured?",
+        "answer": "Final validation of a product will often require certified approval from an international or regional regulation office (typically ETSI, FCC or ARIB depending on the region). One of the tests required is the Continuous Wave radio test (also called Tx-Cw) which is described in another article. Another test requires setting the radio in continuous modulated signal to measure the spectral occupation taken by the radio signal when transmitting packets. To this aim, it is often required for the radio to transmit pseudo-random binary PN9 or PN15 payloads. There is no easy way to perform this test and the only solution is to create the payloads on the companion MCU and then send the packets one by one, with a different PNx sequence generated from the MCU. Here, care must be taken in the time between packets which will have an influence on the spurious emissions generated by the PA ramp-up and down in quick succession."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Is it a must to use the LoRaWAN stack ?",
+        "answer": "No, LoRa devices can be used like any other RF transceiver in existing applications with custom proprietary protocols. However, using LoRaWAN will significantly improve time to market. The stack, having similarities to 802.15.4,   is FCC and ETSI compliant and offers all the security needed by a modern RF protocols (network key, unique Id for each end point, AES128 encryption... ). LoRaWAN also offers the possibility to be used in private AND public networks."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "I have an existing RS-232/cellular/ZigBee-based system. Can I just plug in a LoRa Module and get the extra range?",
+        "answer": "There are changes required at the host interface and specifications for transmitting data in a LoRa system that require changes to the host system software, but with fully integrated modems available in the eco-system, and their well-defined host controller interface, it is actually quite seamless."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Why is the AppKey/NwkKey used for Join Accept security?",
+        "answer": "The \"JoinAccept\" message is decrypted by the Application Server (AS) and   not the Network Server (NS). The AS is allowed to see the end-device application data but the NS is not. The AS exchanges key information with the end-device through the NS (the NS forwards the messages but doesn't understand them). At the end of the exchange, when the session keys have been calculated, the AS gives the network session key to the NS."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Is LBT+AFA supported in release 2 of the Gateway hardware reference design ?",
+        "answer": "In Europe LBT+AFA ( Listen-Before-Talk + Adaptive-Frequency-Agility ) is not desired or implemented, however in certain regions LBT is mandated. The Corecell reference design now implements LBT, specifically to be in compliance with regulations in Korea and Japan."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What is the data rate for LoRaWAN ?",
+        "answer": "LoRaWAN data rates range for LoRa between 0.3 kbps to 11 kbps, and one GFSK data rate at 50 kbps for Europe. In North America, the minimum data rate is 0.9 kpbs due to FCC rules. To maximize both battery life of the end-devices and overall network capacity, the LoRaWAN network server is managing the data rate and RF output power for each end-device individually by means of an adaptive data rate (ADR) algorithm. The ADR is critical for a high performance network and it enables scalability. A network can be deployed with a minimal investment in infrastructure, and as capacity is needed, more gateways can be deployed and  the ADR will shift the data rates higher which will scale the network capacity."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Is LoRa only for wide area networks?",
+        "answer": "No, LoRaWAN as a protocol is strictly for wide area networks, but LoRa as a lower-level physical layer technology (PHY) can be used in all sorts of applications outside of wide area."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Why should I certify my product?",
+        "answer": "LoRaWAN  certification ensures interoperability and compliance with LoRaWAN networks and will be requested by LoRaWAN network carriers. It also entitles the use of the  LoRa Alliance Certified logo."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What kind of LoRaWAN devices can be certified?",
+        "answer": "Today, the LoRa Alliance certifies LoRaWAN end-nodes that are compliant with LoRaWAN standard. The LoRa Alliance is aggressively working to bring additional, value-added certification programs to its members.  Providing Certification of LoRaWAN features above Layer 2 are regularly being deployed.  Features like SCHC and FUOTA are already available. More information on the LoRa Alliance website:https://lora-alliance.org/lorawan-certification/"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Who is responsible for AppEUI assignment?",
+        "answer": "The 64 bit Extended Unique Identifier (EUI) is comprised of two parts, the 24 bit Organisationally Unique Identifier (OUI) and a 40 bit serial number. The OUI is allocated   by the IEEE, and the serial number by anyone that owns an OUI, together they form the EUI. AppEUI and DevEUI are both special cases of EUI."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "What are FPort values 1..223 used for and who is responsible for their assignment?",
+        "answer": "FPort values 1..223 are application specific with their meaning being defined by the application provider. The LoRa Alliance has not specified an assignment for any port in this range to a particular application."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Where is the application payload encrypted and is the Frame Count used in the encryption process?",
+        "answer": "The network server will pass the FCnt (specifically the FCntUp) to the application layer as part of the MACPayload Frame header (FHDR) as specified in 4.3.1 of 1.0.3 of the LoRaWAN Specification. The Application Session Key (AppSKey) along with the FCntUp and DevAddr are used in the decryption of the payload data (FRMPayload) as described in 4.3.3 of the LoRaWAN Specification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P60",
+        "question": "Can LoRa be used in a mesh topology?",
+        "answer": "This is possible, but there would be a need to convert an existing 802.15.4 or other mesh protocol to use the modulation format.\r\nBecause of some of LoRa's features such as longer transmission time which increases link budget and the availability of a relay specification, LoRaWAN  is usually the best choice."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "Do I need a gateway if I'm just producing a few endpoints?",
+        "answer": "No, you do not need a gateway. You can easily implement simple protocols using LoRa, either with modules or with the chips themselves. Note that LORaWAN layer 2 protocol requires the use of a gateway, or alternately a Relay with gateway"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "Why should I use a module, if there is open source code on GitHub, can't I just use that?",
+        "answer": "There are three primary reasons why you should use a module/modem: The open source code available online for LoRaWAN is implementing the LoRaWAN protocol for a chip-down implementation. If you go down this route the RF certification and LoRaWAN Certification will need to be re-done."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the Semtech SX1301 LoRa device?",
+        "answer": "The SX1301 device is the baseband signal processor for LoRa gateways. It takes 32 MHz, 1-bit I/Q digital baseband samples as an input. It is generally paired with two SX1257 front end digitizers, though it can be used with other forms of digital RF. This is often done with the 8 x SX1301 gateway architecture Senet uses in its network deployment."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "Can I use LoRa at frequencies other than 868 MHz and 915 MHz in licensed spectrum?",
+        "answer": "With SX1261/2 and LR110 it is possible to transmit and receive the LoRa modulation at many frequencies between 150 MHz and 1 GHz, such as 169 MHz, 433 MHz, etc. even in the licensed spectrum. LR1120/1 offers also the possibility to operate in the 2.4GHz as well as in the licensed S-Band portion used by SATCOM. The Semtech gateway reference designs are design to operate only at 850 MHz to 1 GHz and in the 2.4GHz band, although it could be easily adapted for other frequencies."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the difference between SX1272 and SX1276?",
+        "answer": "SX1272 has three programmable LoRa bandwidth settings: 500 kHz, 250 kHz and 125 kHz. It covers bands from 850-1 GHz. SX1276 has bandwidths from 500 kHz to 7.8 kHz, and covers 150 MHz bands, 433 MHz, and 850-1 GHZ."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is LoRa Gateway or Concentrator ?",
+        "answer": "Lora gateways or concentrators are designed to be used in long range star network architectures and are utilized in a LoRaWAN system. They are multi-channel, multi-modem transceivers and can demodulate on multiple channels simultaneously and even demodulate multiple signals on the same channel simultaneously due to the properties of LoRa. The gateways use different RF components than the end-point to enable high capacity and serve as a transparent bridge relaying messages between end-devices and a central network server via standard IP connections while end-devices use single-hop wireless communication to one or many gateways. All end-point communication is generally bi-directional, but also supports operations such as multicast enabling, software upgrade, over the air or other mass distribution messages to reduce the on air communication time. There are different gateway versions depending the desired capacity and installation location (home vs. tower). The term gateway and concentrator are both used, but they are equivalent components in a LoRa system. In other industries the definition of gateway and concentrator may imply different components."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is NetID and how is it allocated?",
+        "answer": "NetID identifies the network. It is used for roaming. A private network which does not require roaming can freely use NetID=0 or NetID=1. Other network IDs are allocated by the LoRa Alliance. There are 7 types of NetID, overall 10 million networks can be identified."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "How does passive roaming work?",
+        "answer": "A device's uplink can be received by two or more networks simultaneously, typically the gateways are configured to ensure overlapping over multiple channels, at least the joining channels. Passive roaming is transparent for the device, it has no specific action to undertake. Passive roaming is defined for two flavours:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "How many end devices can a network host ?",
+        "answer": "Each network ID type corresponds to a different addressing space for end-devices, ranging from 128 addresses to 33 million addresses. Many end-devices may share the same address in a network, as the device identifier is the combination of DevAddr and network session key. The devices number can thus reach 1 billion for a single NetID. If a network exceeds this value, it will be allocated additional NetID(s) by the LoRa Alliance."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the competitive positioning of LoRa versus NB IoT?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "Can I assign my own device EUI (ie. Not necessarily globally unique)?",
+        "answer": "If a licensed network decides to assign ‘local’ or ‘private’ device EUI then it is not possible to support movement between networks. If this is the case, then devices should be indicated as ‘private’ in the usage report. In this case, the usage will not be covered on any other LoRaWAN network."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the cost of the gateway reference design license?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "Which frequency offset has to be taken into account to avoid disturbance of 3G and 4G telecom networks?",
+        "answer": "The gateway reference designs are specified to coexist with 3G, and more importantly with 4G base stations, when co-located with a 4G base station with 50 dB of antenna isolation. The main risk is the injection  by the LoRa® GW of noise into the LTE uplink band 20, but this is taken care of  by the Semtech  reference designs."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What should be the duration of the receive windows \"RX1\" and \"RX2\"?",
+        "answer": "The length of a receive window must be at least the time required by the end-device’s radio transceiver to effectively detect a downlink preamble. Minimum 6 symbols are required to do so e.g.:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What latency may occur if number of nodes (Class B) increases from 1 to 100 and from 100 to 1000?",
+        "answer": "In the Class B principle, the latency is not defined by the number of nodes, but by the latency that the node requests to the network. If it negotiates 32 seconds with the network, then on average, it will be listening to the network every 32 seconds. When the load increases for Class B on a specific gateway, the impact is not delay but potentially overhearing of more than 1 device on a defined  \"meeting point\", in other words if the gateway is out of time slots, it may assign the same time slot to multiple devices. This would cause these devices to lengthen their listening time (and therefore consume more energy), even when the  \"other\" device is interrogated. This impact is mild obviously, on the basis that network actuation is meant to be scarce (a few times per day typically)."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the purpose of the second receive window  \"\"RX2\"\"?",
+        "answer": "Having two receive windows is a way to optimize network downlink capability, but offering two downlink opportunities, which can be made different in terms of channel/SF. If the end-device did not receive the downlink frame during the first receive window \"RX1\", it must open a second  receive window \"RX2\". Note that the end-device does not open the second receive window if a frame intended for this end-device has correctly checked the address and MIC (message integrity code) during the first receive window."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the maximum payload size?",
+        "answer": "It is region specific. For EU863-870, the maximum application payload length is: All values are available in the LoRaWAN Regional Parameters specification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the ADR feature?",
+        "answer": "ADR stands for Adaptive Data Rate. The ADR feature is used to adapt and optimize the following parameters of a static end-device: The end-device decides to enable ADR. Once ADR is requested by the end-device, the network can optimize the end-device’s data rate, Tx power, channel mask and the number of repetitions for each uplink message."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "For the end-device, are the 2 receive windows (opened after each uplink transmission) programmable?",
+        "answer": " "
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P80",
+        "question": "What is the maximum data rate?",
+        "answer": "It is region specific. For EU863-870, it   is  from 250 bps to 11 kbps with LoRa® modulation and up to 50 kbps in FSK modulation mode."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Can ADR change the channels?",
+        "answer": "No. ADR does not override the frequency channel but enable the use of the pre-configured channels through a channel mask. However, new channels can be deployed with another MAC command, NewChannelReq."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How many channels are supported?",
+        "answer": "The maximum number of uplink channels is dependent on the PHY band in use. PHY bands like the European one handle a maximum of 16 channels. 3 default channels which can't be modified + 13 channels which can be created/deleted/enabled/disabled. PHY bands like the US915 handles a maximum of 72 channels. They exist all the time but can be enabled/disabled according to the local regulator rules. PHY bands like the CN470 handles a maximum of 96 channels. They exist all the time but can be enabled/disabled according to the local regulator rules. The channels are defined as described below. Channel frequency between 100 MHz and 1.67 GHz in 100 Hz steps. Data rate range (min. and max.)"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "What is the way to test LoRa at PHY level to verify the performance of an application",
+        "answer": "Tx Power: this should be done with a power-meter or a spectrum analyzer (SA). If using the latter, make sure that the RBW (Resolution Band Width) is made large enough (typically 1MHz for a LoRa BW of 125kHz) to integrate the whole power during CSS modulation. Ensure that the transmitter is set to Tx Continuous mode for this test."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "What is LoRa?",
+        "answer": "LoRa (short for long range) is a spread spectrum modulation technique derived from chirp spread spectrum (CSS) technology. Semtech's LoRa is a long range, low power wireless platform that has become the de facto wireless platform of Internet of Things (IoT). Beecham Research predicted in their 2023 report that LoRa will be the remain the leading LPWAN technology (34% share for 2027) with a CAGR of 17.6% (2021-2027). LoRa is the most suitable technology for long range, high capacity systems on the fragmented battery operated wireless market for sensor networks, smart cities, smart metering, security systems, smart home, and industrial control. With our LoRa RF platform, we have developed a 2-way wireless solution that complements M2M cellular or WiFi infrastructure, and provides a low-cost way to connect battery operated and mobile devices to either the network infrastructure or end point. To visit Semtech's LoRa website clickhere."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "What is the capacity of LoRa gateway? How many nodes can be connected to a single gateway?",
+        "answer": "Capacity is, first and foremost, a consequence of the number of packets that can be received in a given time. A corecell SX1302 based design with 8 channels can receive approximately 1.5 million packets (50Byte) per day using LoRaWAN protocol. So, if your application sends one packet per hour, then a single SX1302 gateway can handle about 62,500 end devices."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Is LoRa IPv6 or 6LoWPAN enabled?",
+        "answer": "Yes, LoRa and LoRaWAN can support the IPv6 protocol and UDP with an adaptation layer called SCHC and standardized by the LoRa Alliance and the IETF. SCHC is a compression and fragmentation mechanism that was specified in 2020 and makes LoRaWAN capable to support internet-based applications such as DLMS protocol used in smart metering,  or CoAP for supporting protocol like LwM2M. Compared to 6LoWPAN that was designed in 2005 for enabling IP over 802.15.4 and for home automation application mainly , SCHC brings much better efficiency for constrained networks than 6LoWPAN does. Actility (a LoRa partner) and other partners are enabling applications using SCHC on top of LoRaWAN. NB: SCHC can also be used for optimizing or enabling IPv6 over Nb-IoT."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Is LoRa a mesh network, point to point, or a star network?",
+        "answer": "The LoRa modulation itself is a PHY that can be used in all network topologies. A mesh network extends the range of the network but comes at the cost of reduced network capacity, synchronization overhead, and reduced battery lifetime due to synchronization and hops. The increased link budget and range capability of LoRa, removes the  need for a mesh network architecture to extend the range for most application, so a star architecture was chosen for LoRaWAN to optimize the network capacity, battery lifetime, and easy installation. Mesh networks based on LoRa can be pertinent for some use cases, such as linear infrastructure monitoring."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Can the payload length of a LoRa mode configuration be set to 256 bytes with any data-rate?",
+        "answer": "The FIFO of most LoRa device is 256 bytes deep in LoRa mode. In theory, all the 256Bytes can be used for TX or RX. However, with a low data-rate configuration, the time on air with a 256byte payload will be very long (several seconds or even longer), which is not good for resisting fading and high interference environments. This is not a robust configuration in most environments so it is suggested that if a long payload is desired with a low data-rate then the packet be split into a few shorter packets."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How can you calculate the actual bit rate and time on air for a LoRa system?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Why are there two RSSI registers in LoRa mode? What is the difference?",
+        "answer": "The RegPktRssiValue and RegRssiValue are both useful in LoRa mode. RegPktRssiValue refers to the packet RSSI level, and the RegRssiValue is similar to the RSSI that can be found in (non LoRa) FSK mode. As you know, LoRa can demodulate the packet below the noise floor (PktRssi result) then CurrentRssi will then be equal to or more than the noise floor. For more details about how to calculate these two RSSI Values, please refer to the Semtech API or latest LoRa datasheets."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How can you use the DIOx pins in LoRa mode? Should all DIOx pins be connected to the MCU?",
+        "answer": "When you start your design, check the DIO Mapping in both the LoRa mode and FSK mode. You can find the DIO Mapping information in all Semtech LoRa® product datasheets. The DIOs do not function as normal (typical) MCU GPIOs. There are some special interrupt signals (or clock outputs) to indicate the event or status of the chipset, which then make your FW design easier to implement. In theory, you could connect no DIOs and then poll the related register to know the status result. However, we suggest that you connect the DIO as much as possible for external interrupt functionality which saves on the resource loading of the MCU and permits a very low-power operation mode (the MCU can sleep while packet it Tx'ed or Rx'ed)."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Can I send or receive an unlimited length payload packet with a LoRa device?",
+        "answer": "No, the maximum packet length is 256 bytes in LoRa mode"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How can it be possible to receive a wrong packet when I set the cyclic redundancy check (CRC) to \"on\" in LoRa mode?",
+        "answer": "In LoRa mode, even if the CRC is wrong the payload will be filled into the FIFO. Bit PayloadCrcError must be checked before fetching the payload to know its integrity. In Explicit Header mode, there is a small probability that a false detection creates a  \"ghost\" packet. Either the false header has CrcOn bit turned on, and then the payload will be wrong, and the modem will flag it as a PayloadCrcError condition, so packet can easily be filtered out. Or the false header has CrcOn disabled, in which case the mode will consider the packet as a good one. These infrequent bad packet will have a random length (extracted from the false header info), and can be easily filtered by the host, for instance by seeing that their size is unexpected."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "What are the steps to troubleshoot when two SX127x modules from different manufacturers are notable to communicate with each other?",
+        "answer": "First of all, check the frequency offset caused by the crystal between the two devices. The BW, center frequency, and data rate are all derived from the crystal frequency. Second, check the software/firmware settings on both sides for frequency, bandwidth, spreading factor, coding rate and packet structure to ensure they are the same."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How do you choose the LoRa BW, Spreading factor (SF) and Coding Rate (CR)?",
+        "answer": "LoRaWAN uses primarily the 125kHz BW setting, but other proprietary protocols can utilize other BW settings. Changing the BW, SF, and CR changes the link budget and time on air, which results in a battery lifetime versus range tradeoff. Please use theLoRa Modem Calculatorto evaluate the tradeoffs."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "For a LoRa wide band signal, how can you measure the frequency accuracy in LoRa mode?",
+        "answer": "If it is just for measurement, you can use the Frequency synthesis TX (FSTX) mode as listed in the LoRa register table to generate a CW tone based on the LoRa configuration."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How to choose a proper crystal for a LoRa device?",
+        "answer": "Normally, a +/-10ppm XTAL is good enough for most designs with a bandwidth of 62.5kHz or higher. For bandwidth (BW) less than 62.5kHz, a TCXO is strongly suggested. For more details, please refer to AN1200.59 Application note for selecting the optimal clock."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How can I implement a mass production test for a Lora system?",
+        "answer": "Please visit the blog post:Expert Series: Testing Devices Featuring LoRa® [How To]for more details."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "How to troubleshoot the output power if it is not able to achieve +20dBm?",
+        "answer": ""
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P100",
+        "question": "Is it OK to change the mode between FSK and LoRa modulation frequently?",
+        "answer": "Yes, it is no problem. The LoRa device can be switched from FSK to LoRa (and vice versa) via simple SPI register write. This has no effect on the performance or reliability of the device. A LoRa device can be configured and reconfigured to any of the parameters as specified in the datasheets."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "Why is the output power of my SX1276 module not able to achieve 20dBm?",
+        "answer": "The +20dBm specification is for the output power at the pin of the chip. The band-pass filter and RF switch have insertion loss characteristics as in any RF system. Achieving +19dBm at the antenna is typical performance after matching and filtering."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is the process of the LoRa Channel Activity Detection (CAD) mode?",
+        "answer": "Instead of using a Received Signal Strength Indicator (RSSI) method to identify if a signal is present, the CAD is used to detect the presence of a LoRa signal. It has the capability to differentiate between noise and a desired LoRa signal. The CAD process requires two symbols, and if the CAD is detected, the CAD_Detected interrupt will be asserted and the device will stay in RX mode to receive the data payload. See Application Note AN1200.48 for details on the implementation for the SX1261/62 family of products."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is the actual Tx power that can be achieved on the antenna for LoRa sensors?",
+        "answer": "Our SX127x product family supports up to +20dBm, and the newer generation LR11xx and SX126x parts support +22dBm. Different regions have different regulations for max output power, and the LoRaWAN specification defines different output power for the different regions to maximize the link budget."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is Adaptive Data Rate (ADR)?",
+        "answer": "ADR is a method where the actual data rate is adjusted to ensure reliable packet delivery, optimal network performance, and scale for capacity. For example, nodes close to the gateway will use a higher data rate (shorter time on air) and a lower output power. Only Nodes that are at the very edge of the link budget will use the lowest data rate and highest output power. The ADR method can accommodate changes in the network infrastructure and support varying path loss. To maximize both battery life of end-devices and overall network capacity, the LoRa network infrastructure manages the data rate and RF output for each end node individually by implementing ADR."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is a LoRa End Node or Endpoint?",
+        "answer": "The LoRa endpoints are the elements of the LoRa network where the sensing or control is undertaken. They are remotely located and are most probably battery operated. These endpoints can be setup to communicate with a LoRa Gateway (Concentrator or Base Station) using the LoRaWAN network protocol."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is the data rate for LoRa?",
+        "answer": "LoRaWAN defines a specific set of data rates, but the LoRa chip or PHY is capable of more options. The SX1272 supports data rates from 0.3 to 37.5kbps and the SX1276 0.018 to 37.5kbps. Later generation parts also offer support for Spreading Factor 5, increasing further the throughput."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "How well does LoRa handle interference?",
+        "answer": "The LoRa modem is capable of co-channel GMSK rejection of up to 19.5 dB or stated differently, it can receive signals 19.5dB below an interfering signal or the noise floor. This immunity to interference permits the simple coexistence of LoRa modulated systems either in bands of heavy spectral usage or in hybrid communication networks that use LoRa to extend range when legacy modulation schemes fail. The addition of the Long Interleaver in newer products increases the resistance to burst interferers during reception, even if their power exceeds 19.5dB above the co-channel resistance specification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "Do I have flexibility to run a proprietary stack on LoRa Edge LR1110?",
+        "answer": "Unfortunately, no. The LoRa Basics® Modem-E is a modem based on the LoRaWAN® protocol and is certified to run on LR1110."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "Which NS platforms are integrated with the Semtech Join server?",
+        "answer": "Any LNS which implements the LoRaWAN backend specification can register to the Semtech Join Server. The list of registered network server can be obtained via the Join Server Web Portal."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What should network operators do in order to integrate with the Semtech Join Server?",
+        "answer": "Semtech Join Server allows to register any new Network Servers via the Join Server Web Portal. Create an account on LoRa Cloud, click on '˜Your Network Server' and 'Add Server' to generate your access credentials for the LNS-JS interface to the Semtech Join Server according to LoRaWAN Backend Specification."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What are the advantages of using the LoRa Cloud® Services?",
+        "answer": "The Cloud solver is an integral part of the LoRa Edge platform for computing a position fix using GNSS and for acquiring a Wi-Fi based location fix using triangulation of static MAC addresses. Key advantages of using Semtech’s end-to-end LoRa Cloud solution include:"
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "What is the function of the LoRaWAN protocol data server in LoRa Cloud in terms of positioning (any advantage or disadvantage) when compared to Actility and The Things Network?",
+        "answer": "Actility and The Things Network offer a network server. Semtech offers a Cloud server for geolocation services as well as a suite of the Device & Application Services. The network server is connected to the Cloud on the back end. We are not replacing it."
+    },
+    {
+        "url": "https://www.semtech.com/design-support/faq/P120",
+        "question": "Will the API for connecting to LoRa Cloud be opened up to the customer?",
+        "answer": "Yes, it is open and fully documented in the LoRa Cloud."
+    }
+]

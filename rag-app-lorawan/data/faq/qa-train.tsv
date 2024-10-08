@@ -1,0 +1,12 @@
+question	answer	manual quote
+What is the purpose of a LoRaWAN network key (NwkSKey)?	The network key (NwkSKey) is used to secure communication between a LoRaWAN device and the network server, ensuring data integrity and authenticity.	
+What is the significance of the uplink frame counter in LoRaWAN?	The uplink frame counter helps prevent replay attacks by ensuring each uplink message has a unique sequence number, enhancing security.	
+How does LoRaWAN support energy-efficient device operation?	LoRaWAN supports energy-efficient operation through features like low power modulation, adaptive data rate (ADR), and optimized communication classes (A, B, C).	
+What is the significance of the application server in LoRaWAN?	The application server processes and stores data from end devices, manages application-specific logic, and sends control commands to devices.	
+What is the role of the network server in LoRaWAN?	The network server manages device registrations, routes data between devices and application servers, and ensures security and compliance with the LoRaWAN protocol.	
+What is the significance of duty cycle limitations in LoRaWAN?	Duty cycle limitations restrict the amount of time a device can transmit on a given frequency, ensuring fair use of the spectrum and minimizing interference.	
+What is the significance of regional parameters in LoRaWAN?	Regional parameters define the frequency bands, channel plans, and other settings specific to each region, ensuring regulatory compliance and optimal performance.	
+How does LoRaWAN handle device mobility between different networks?	LoRaWAN handles device mobility by allowing devices to connect to any compatible network server, supporting seamless mobility and interoperability between networks.	
+What is the role of the DevEUI in LoRaWAN?	The DevEUI is a globally unique identifier for each LoRaWAN device, used during the join procedure and for device management in the network.	
+What is the significance of the AppEUI in LoRaWAN?	The AppEUI is a unique identifier for the application provider, used during the join procedure to identify the application server associated with the device.	
+How does LoRaWAN handle roaming between different networks?	LoRaWAN handles roaming by allowing devices to connect to any compatible network server, supporting seamless mobility and interoperability between networks.	
