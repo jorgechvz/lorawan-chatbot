@@ -20,7 +20,7 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=/opt/poetry python
 COPY pyproject.toml poetry.lock* /backend/
 
 # Copy .env file
-COPY .env /backend/.env
+COPY /backend/.env
 
 # Install dependencies
 RUN poetry install --no-root --no-cache --only main
