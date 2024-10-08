@@ -34,9 +34,12 @@ export default function ChatInterface() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_PUBLIC_CHAT_API}`, {
-        query: inputMessage,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_PUBLIC_CHAT_API}`,
+        {
+          query: inputMessage,
+        }
+      );
 
       const aiResponse: Message = {
         id: Date.now() + 1,
@@ -76,6 +79,11 @@ export default function ChatInterface() {
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-gray-100">
       <div className="flex flex-col justify-between bg-white border border-gray-300 rounded-lg shadow-lg w-full max-w-7xl h-[80vh]">
+        <div className="p-6 bg-blue-600 text-white text-center rounded-t-lg">
+          <h1 className="text-2xl font-bold">
+            LoRa Chatbot: Intelligent Conversations for IoT Networks
+          </h1>
+        </div>
         {/* Chat Area */}
         <div
           ref={chatContainerRef} // Referencia para el scroll

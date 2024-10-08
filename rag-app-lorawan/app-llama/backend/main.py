@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
-import nest_asyncio
 import asyncio
 
 # Load environment variables
@@ -24,9 +23,6 @@ from llama_index.core import (
     PromptTemplate,
     get_response_synthesizer,
 )
-
-# Initialize nest_asyncio
-nest_asyncio.apply()
 
 # Initialize the FastAPI app
 app = FastAPI()
