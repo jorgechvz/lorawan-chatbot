@@ -58,6 +58,8 @@ rag-app-lorawan/
 ├── notebooks/
 │   ├── 01_data_articles_collection.ipynb
 │   ├── 02_data_faq_collection.ipynb
+│   ├── 03_rag_lorawan_openai.ipynb
+│   ├── 04_clean_faq_data_lorawan_rag.ipynb
 │   ├── 05_evaluate_rag_llamaidx.ipynb
 │   ├── 06_anthropic_model.ipynb
 │   ├── 07_improve_hyperparameters.**ipynb**
