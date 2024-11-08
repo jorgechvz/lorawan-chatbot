@@ -1,6 +1,6 @@
 FROM python:3.11 as build
 
-WORKDIR /app-llama
+WORKDIR /app
 
 ENV PYTHONPATH=/app
 
@@ -22,5 +22,7 @@ RUN poetry install --no-root --no-cache --only main
 FROM build as release
 
 COPY . .
+
+EXPOSE 8000
 
 CMD ["python", "main.py"]
