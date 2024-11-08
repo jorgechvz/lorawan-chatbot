@@ -24,7 +24,7 @@ The notebooks directory contains several Jupyter Notebooks used for data collect
 
 ## Deployment
 
-You can test the app navigating to [https://lorawan-chatbot-frontend.onrender.com](https://lorawan-chatbot-frontend.onrender.com) ` in your browser.
+You can test the app navigating to [https://lorawan-chatbot.vercel.app/](https://lorawan-chatbot.vercel.app/) ` in your browser.
 
 ## Prerequisites
 
