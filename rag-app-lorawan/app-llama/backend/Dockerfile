@@ -23,4 +23,14 @@ FROM build as release
 
 COPY . .
 
-CMD ["python", "main.py"]
+ENV PATH="/opt/poetry/bin:$PATH"
+ENV PYTHONPATH=/app
+
+# Install runtime dependencies
+RUN apt update && apt install -y chromium chromium-driver
+
+# Expose the application port
+EXPOSE 8000
+
+# Command to run the application
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
