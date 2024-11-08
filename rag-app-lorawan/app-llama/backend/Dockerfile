@@ -1,6 +1,6 @@
 FROM python:3.11 as build
 
-WORKDIR /app
+WORKDIR /app-llama
 
 ENV PYTHONPATH=/app
 
@@ -23,14 +23,4 @@ FROM build as release
 
 COPY . .
 
-ENV PATH="/opt/poetry/bin:$PATH"
-ENV PYTHONPATH=/app
-
-# Install runtime dependencies
-RUN apt update && apt install -y chromium chromium-driver
-
-# Expose the application port
-EXPOSE 8000
-
-# Command to run the application
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "main.py"]
